@@ -2605,7 +2605,6 @@ namespace PckStudio.Controls
             setSubPCKBOXVersionToolStripMenuItem.Visible = false;
             exportToolStripMenuItem.Visible = false;
             toolStripSeparator5.Visible = false;
-            toolStripSeparator6.Visible = false;
             exportIconToolStripMenuItem.Visible = false;
             convertToFolderToolStripMenuItem.Visible = false;
             moveDownStripMenuItem.Visible = false;
@@ -2617,8 +2616,6 @@ namespace PckStudio.Controls
                 replaceToolStripMenuItem.Visible = true;
                 cloneFileToolStripMenuItem.Visible = true;
                 setFileTypeToolStripMenuItem.Visible = true;
-                toolStripSeparator5.Visible = true;
-                toolStripSeparator6.Visible = true;
 
                 switch (asset.Type)
                 {
@@ -2627,6 +2624,7 @@ namespace PckStudio.Controls
 
                         moveDownStripMenuItem.Visible = true; // allow for skin sorting
                         moveUpStripMenuItem.Visible = true;
+                        toolStripSeparator5.Visible = true;
 
                         exportIconToolStripMenuItem.Visible = Settings.Default.UseCustomSkinIcons; // only enable if setting is true, no point in exporting custom icons otherwise
                         break;
@@ -2635,6 +2633,7 @@ namespace PckStudio.Controls
 
                         moveDownStripMenuItem.Visible = true; // allow for cape sorting
                         moveUpStripMenuItem.Visible = true;
+                        toolStripSeparator5.Visible = true;
                         break;
                     case PckAssetType.TextureFile:
                         generateMipMapTextureToolStripMenuItem1.Visible = true;
@@ -2735,7 +2734,11 @@ namespace PckStudio.Controls
                 if (index == 0 || selectedNode.Index == 0)
                     return;
 
-                MovePckAsset(selectedAsset, EditorValue.File.GetAssets().ElementAt(index - 1));
+                PckAsset targetAsset = EditorValue.File.GetAssets().ElementAt(index - 1);
+                if (targetAsset.Type != PckAssetType.SkinFile && targetAsset.Type != PckAssetType.CapeFile)
+                    return;
+
+                MovePckAsset(selectedAsset, targetAsset);
                 _wasModified = true;
                 BuildMainTreeView();
                 SelectNodeByPath(selectedAsset.Filename);
@@ -2750,7 +2753,11 @@ namespace PckStudio.Controls
                 if (index == EditorValue.File.AssetCount || selectedNode == selectedNode.Parent.LastNode)
                     return;
 
-                MovePckAsset(selectedAsset, EditorValue.File.GetAssets().ElementAt(EditorValue.File.IndexOfAsset(selectedAsset) + 1));
+                PckAsset targetAsset = EditorValue.File.GetAssets().ElementAt(index + 1);
+                if (targetAsset.Type != PckAssetType.SkinFile && targetAsset.Type != PckAssetType.CapeFile)
+                    return;
+
+                MovePckAsset(selectedAsset, targetAsset);
                 _wasModified = true;
                 BuildMainTreeView();
                 SelectNodeByPath(selectedAsset.Filename);
