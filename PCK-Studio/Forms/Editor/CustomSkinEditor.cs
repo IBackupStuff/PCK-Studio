@@ -94,6 +94,7 @@ namespace PckStudio.Forms.Editor
             List<SkinPartOffset> offsetProperties = modelInfo.PartOffsets;
 
             renderer3D1.ANIM = EditorValue.Anim;
+            skinAdjustmentsEditorControl1.SetSkin(EditorValue);
 
             renderer3D1.ModelData.Clear();
             foreach (SkinBOX box in boxProperties)
