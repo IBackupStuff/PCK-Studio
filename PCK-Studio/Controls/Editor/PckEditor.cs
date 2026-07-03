@@ -1191,6 +1191,15 @@ namespace PckStudio.Controls
                 treeViewMain.SelectedNode = selectedNodes[0];
         }
 
+        private void MovePckAsset(PckAsset movingAsset, PckAsset targetAsset)
+        {
+            // I overthought this for so long, I guess this works lol - May
+            int targetIndex = EditorValue.File.IndexOfAsset(targetAsset);
+
+            EditorValue.File.RemoveAsset(movingAsset);
+            EditorValue.File.InsertAsset(targetIndex, movingAsset);
+        }
+
         private void treeViewMain_DragDrop(object sender, DragEventArgs e)
         {
             // Retrieve the client coordinates of the drop location.
@@ -1280,12 +1289,7 @@ namespace PckStudio.Controls
 
             if (draggedNodeIsSkinAsset && targetNodeIsSkinAsset)
             {
-                // I overthought this for so long, I guess this works lol - May
-                int draggedIndex = EditorValue.File.IndexOfAsset(draggedAsset);
-                int targetIndex = EditorValue.File.IndexOfAsset(targetAsset);
-
-                EditorValue.File.RemoveAsset(draggedAsset);
-                EditorValue.File.InsertAsset(targetIndex, draggedAsset);
+                MovePckAsset(draggedAsset, targetAsset);
                 selectedNodePath = draggedAsset.Filename;
             }
             if (draggedNodeIsFile &&
@@ -2604,6 +2608,8 @@ namespace PckStudio.Controls
             toolStripSeparator6.Visible = false;
             exportIconToolStripMenuItem.Visible = false;
             convertToFolderToolStripMenuItem.Visible = false;
+            moveDownStripMenuItem.Visible = false;
+            moveUpStripMenuItem.Visible = false;
 
             if (treeViewMain?.SelectedNode.TryGetTagData(out PckAsset asset) ?? false)
             {
@@ -2619,10 +2625,16 @@ namespace PckStudio.Controls
                     case PckAssetType.SkinFile:
                         exportToolStripMenuItem.Visible = true;
 
+                        moveDownStripMenuItem.Visible = true; // allow for skin sorting
+                        moveUpStripMenuItem.Visible = true;
+
                         exportIconToolStripMenuItem.Visible = Settings.Default.UseCustomSkinIcons; // only enable if setting is true, no point in exporting custom icons otherwise
                         break;
                     case PckAssetType.CapeFile:
                         exportIconToolStripMenuItem.Visible = Settings.Default.UseCustomCapeIcons;
+
+                        moveDownStripMenuItem.Visible = true; // allow for cape sorting
+                        moveUpStripMenuItem.Visible = true;
                         break;
                     case PckAssetType.TextureFile:
                         generateMipMapTextureToolStripMenuItem1.Visible = true;
@@ -2712,6 +2724,36 @@ namespace PckStudio.Controls
                     MessageBox.Show(this, $"\"{asset.Filename}\" was not a valid SkinData file.", "Archive not converted", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+            }
+        }
+
+        private void moveUpStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewMain.SelectedNode is TreeNode selectedNode && selectedNode.Tag is PckAsset selectedAsset)
+            {
+                int index = EditorValue.File.IndexOfAsset(selectedAsset);
+                if (index == 0 || selectedNode.Index == 0)
+                    return;
+
+                MovePckAsset(selectedAsset, EditorValue.File.GetAssets().ElementAt(index - 1));
+                _wasModified = true;
+                BuildMainTreeView();
+                SelectNodeByPath(selectedAsset.Filename);
+            }
+        }
+
+        private void moveDownStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewMain.SelectedNode is TreeNode selectedNode && selectedNode.Tag is PckAsset selectedAsset)
+            {
+                int index = EditorValue.File.IndexOfAsset(selectedAsset);
+                if (index == EditorValue.File.AssetCount || selectedNode == selectedNode.Parent.LastNode)
+                    return;
+
+                MovePckAsset(selectedAsset, EditorValue.File.GetAssets().ElementAt(EditorValue.File.IndexOfAsset(selectedAsset) + 1));
+                _wasModified = true;
+                BuildMainTreeView();
+                SelectNodeByPath(selectedAsset.Filename);
             }
         }
     }

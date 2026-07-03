@@ -70,6 +70,8 @@ namespace PckStudio.Controls
             this.importFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.as3DSTextureFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.moveUpStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.miscFunctionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setFileTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,6 +101,7 @@ namespace PckStudio.Controls
             this.exportIconToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullBodyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.croppedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +112,7 @@ namespace PckStudio.Controls
             this.addMultipleEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BigEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.convertToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.ParametersTabControl.SuspendLayout();
@@ -362,6 +365,9 @@ namespace PckStudio.Controls
             this.createToolStripMenuItem,
             this.importToolStripMenuItem,
             this.exportToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.moveUpStripMenuItem,
+            this.moveDownStripMenuItem,
             this.toolStripSeparator5,
             this.miscFunctionsToolStripMenuItem,
             this.extractToolStripMenuItem,
@@ -473,6 +479,17 @@ namespace PckStudio.Controls
             this.as3DSTextureFileToolStripMenuItem.Name = "as3DSTextureFileToolStripMenuItem";
             resources.ApplyResources(this.as3DSTextureFileToolStripMenuItem, "as3DSTextureFileToolStripMenuItem");
             this.as3DSTextureFileToolStripMenuItem.Click += new System.EventHandler(this.as3DSTextureFileToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // moveUpStripMenuItem
+            // 
+            this.moveUpStripMenuItem.Name = "moveUpStripMenuItem";
+            resources.ApplyResources(this.moveUpStripMenuItem, "moveUpStripMenuItem");
+            this.moveUpStripMenuItem.Click += new System.EventHandler(this.moveUpStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -676,6 +693,12 @@ namespace PckStudio.Controls
             resources.ApplyResources(this.croppedToolStripMenuItem, "croppedToolStripMenuItem");
             this.croppedToolStripMenuItem.Click += new System.EventHandler(this.croppedToolStripMenuItem_Click);
             // 
+            // convertToFolderToolStripMenuItem
+            // 
+            this.convertToFolderToolStripMenuItem.Name = "convertToFolderToolStripMenuItem";
+            resources.ApplyResources(this.convertToFolderToolStripMenuItem, "convertToFolderToolStripMenuItem");
+            this.convertToFolderToolStripMenuItem.Click += new System.EventHandler(this.convertToFolderToolStripMenuItem_Click);
+            // 
             // extractToolStripMenuItem
             // 
             resources.ApplyResources(this.extractToolStripMenuItem, "extractToolStripMenuItem");
@@ -742,11 +765,11 @@ namespace PckStudio.Controls
             this.previewPictureBox.Name = "previewPictureBox";
             this.previewPictureBox.TabStop = false;
             // 
-            // convertToFolderToolStripMenuItem
+            // moveDownStripMenuItem
             // 
-            this.convertToFolderToolStripMenuItem.Name = "convertToFolderToolStripMenuItem";
-            resources.ApplyResources(this.convertToFolderToolStripMenuItem, "convertToFolderToolStripMenuItem");
-            this.convertToFolderToolStripMenuItem.Click += new System.EventHandler(this.convertToFolderToolStripMenuItem_Click);
+            this.moveDownStripMenuItem.Name = "moveDownStripMenuItem";
+            resources.ApplyResources(this.moveDownStripMenuItem, "moveDownStripMenuItem");
+            this.moveDownStripMenuItem.Click += new System.EventHandler(this.moveDownStripMenuItem_Click);
             // 
             // PckEditor
             // 
@@ -855,5 +878,8 @@ namespace PckStudio.Controls
         private ToolStripMenuItem croppedToolStripMenuItem;
         private ToolStripMenuItem addOFFSETParameterToolStripMenuItem;
         private ToolStripMenuItem convertToFolderToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem moveUpStripMenuItem;
+        private ToolStripMenuItem moveDownStripMenuItem;
     }
 }

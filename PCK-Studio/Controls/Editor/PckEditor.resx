@@ -912,7 +912,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>76, 42</value>
+    <value>76, 36</value>
   </data>
   <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -957,7 +957,7 @@
     <value>False</value>
   </data>
   <data name="ParameterTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 12</value>
+    <value>215, 6</value>
   </data>
   <data name="ParameterTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 20</value>
@@ -1002,7 +1002,7 @@
     <value>False</value>
   </data>
   <data name="parameterValueTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 44</value>
+    <value>215, 38</value>
   </data>
   <data name="parameterValueTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 20</value>
@@ -1026,7 +1026,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 70</value>
+    <value>215, 64</value>
   </data>
   <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 33</value>
@@ -1059,7 +1059,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>138, -65</value>
+    <value>138, -71</value>
   </data>
   <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -1407,6 +1407,21 @@
   <data name="exportToolStripMenuItem.Text" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="moveUpStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="moveUpStripMenuItem.Text" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="moveDownStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="moveDownStripMenuItem.Text" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>177, 6</value>
   </data>
@@ -1644,7 +1659,7 @@
     <value>Delete</value>
   </data>
   <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 236</value>
+    <value>181, 286</value>
   </data>
   <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
     <value>contextMenuPCKEntries</value>
@@ -1912,6 +1927,18 @@
   <data name="&gt;&gt;as3DSTextureFileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;moveUpStripMenuItem.Name" xml:space="preserve">
+    <value>moveUpStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;moveUpStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
     <value>toolStripSeparator5</value>
   </data>
@@ -2086,6 +2113,12 @@
   <data name="&gt;&gt;croppedToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;convertToFolderToolStripMenuItem.Name" xml:space="preserve">
+    <value>convertToFolderToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;convertToFolderToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;extractToolStripMenuItem.Name" xml:space="preserve">
     <value>extractToolStripMenuItem</value>
   </data>
@@ -2134,10 +2167,10 @@
   <data name="&gt;&gt;addMultipleEntriesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;convertToFolderToolStripMenuItem.Name" xml:space="preserve">
-    <value>convertToFolderToolStripMenuItem</value>
+  <data name="&gt;&gt;moveDownStripMenuItem.Name" xml:space="preserve">
+    <value>moveDownStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;convertToFolderToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;moveDownStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
