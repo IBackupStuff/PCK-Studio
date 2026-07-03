@@ -61,7 +61,7 @@
             this.MinimumSize = new System.Drawing.Size(720, 578);
             this.Name = "SkinAdjustmentsEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Text = "SkinAdjustmentsEditor";
+            this.Text = "Skin Adjustments Flag Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.TransparencyKey = System.Drawing.Color.LemonChiffon;
             this.ResumeLayout(false);
