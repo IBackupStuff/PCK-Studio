@@ -183,7 +183,7 @@ namespace PckStudio.Controls
             {
                 legAnimationComboBox.SelectedIndex = 0;
             }
-
+            RefreshControls();
         }
 
         public SkinANIM GetAnim()
