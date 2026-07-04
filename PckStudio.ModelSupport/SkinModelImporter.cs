@@ -51,13 +51,13 @@ namespace PckStudio.ModelSupport
         internal static SkinModelInfo ImportPsm(string filepath)
         {
             var reader = new PSMFileReader();
-            PSMFile csmbFile = reader.FromFile(filepath);
-            return new SkinModelInfo(null, csmbFile.SkinANIM, new(csmbFile.Parts, csmbFile.Offsets));
+            PSMFile psmFile = reader.FromFile(filepath);
+            return new SkinModelInfo(null, psmFile.SkinANIM, psmFile.SkinFlags, new(psmFile.Parts, psmFile.Offsets));
         }
 
         internal static void ExportPsm(string filepath, SkinModelInfo modelInfo)
         {
-            PSMFile psmFile = new PSMFile(PSMFile.CurrentVersion, modelInfo.Anim);
+            PSMFile psmFile = new PSMFile(PSMFile.CurrentVersion, modelInfo.Anim, modelInfo.SkinFlags);
             psmFile.Parts.AddRange(modelInfo.Model.AdditionalBoxes);
             psmFile.Offsets.AddRange(modelInfo.Model.PartOffsets);
             var writer = new PSMFileWriter(psmFile);
@@ -143,7 +143,7 @@ namespace PckStudio.ModelSupport
             if (mask != SkinAnimMask.NONE)
                 skinANIM &= ~mask;
             
-            return new SkinModelInfo(texture, skinANIM, skinModel);
+            return new SkinModelInfo(texture, skinANIM, SkinGameFlagsMask.HUMAN_SKIN, skinModel);
         }
 
         private static IEnumerable<SkinBOX> ReadOutliner(string parentName, JArray oulineChildren, IReadOnlyCollection<Element> elements)

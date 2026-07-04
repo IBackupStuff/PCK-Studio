@@ -6,6 +6,8 @@ using OMI.Workers;
 using PckStudio.Core.FileFormats;
 using PckStudio.Core;
 using PckStudio.Core.Skin;
+using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace PckStudio.ModelSupport.Internal.Format
 {
@@ -35,33 +37,49 @@ namespace PckStudio.ModelSupport.Internal.Format
             }
             
             byte version = reader.ReadByte();
-            if (version < 1 || version > 1)
+            if (version < 1 || version > PSMFile.CurrentVersion)
             {
                 Trace.TraceError("PSMFileReader.FromStream - Failed to load csmb.\n\tReason: Unsupported version.");
                 return new PSMFile(byte.MaxValue);
             }
 
             var skinANIM = SkinANIM.FromValue(reader.ReadInt32());
-            PSMFile csmbFile = new PSMFile(version, skinANIM);
+            var skinFlags = SkinGameFlags.Empty;
+            
+            if(version > 1)
+                skinFlags = SkinGameFlags.FromValue(reader.ReadByte());
+
+            PSMFile psmFile = new PSMFile(version, skinANIM, skinFlags);
             int numOfParts = reader.ReadInt32();
             for (int i = 0; i < numOfParts; i++)
             {
-                SkinBOX part = ReadPart(reader);
-                csmbFile.Parts.Add(part);
+                SkinBOX part = ReadPart(reader, version);
+                psmFile.Parts.Add(part);
             }
             int numOfOffsets = reader.ReadInt32();
             for (int i = 0; i < numOfOffsets; i++)
             {
                 SkinPartOffset offset = ReadOffset(reader);
-                csmbFile.Offsets.Add(offset);
+                psmFile.Offsets.Add(offset);
             }
             
-            return csmbFile;
+            return psmFile;
         }
 
-        private SkinBOX ReadPart(EndiannessAwareBinaryReader reader)
+        private SkinBOX ReadPart(EndiannessAwareBinaryReader reader, int version)
         {
-            string type = GetParentType((PSMParentType)reader.ReadByte());
+            int armorMask = 0;
+            string type = "";
+            if(version == 1)
+                type = GetParentType((PSMParentType)reader.ReadByte());
+            else
+            {
+                byte armorMaskAndParentType = reader.ReadByte();
+
+                type = GetParentType((PSMParentType)(armorMaskAndParentType & 0x1F)); // get first 5 bits
+                armorMask = (armorMaskAndParentType & 0xE0) >> 5; // get last 3 bits
+            }
+
             float posX = reader.ReadSingle();
             float posY = reader.ReadSingle();
             float posZ = reader.ReadSingle();
@@ -73,9 +91,9 @@ namespace PckStudio.ModelSupport.Internal.Format
             int uvX = mirrorAndUvX & 0x7f;
             int uvY = hideWithArmorAndUvY & 0x7f;
             bool mirror = (mirrorAndUvX & 0x80) != 0;
-            int hideWithArmor = (hideWithArmorAndUvY & 0x80);
+            armorMask = (armorMask << 1) | ((hideWithArmorAndUvY >> 7) & 1);
             float scale = reader.ReadSingle();
-            return new SkinBOX(type, new System.Numerics.Vector3(posX, posY, posZ), new System.Numerics.Vector3(sizeX, sizeY, sizeZ), new System.Numerics.Vector2(uvX, uvY), hideWithArmor, mirror, scale);
+            return new SkinBOX(type, new System.Numerics.Vector3(posX, posY, posZ), new System.Numerics.Vector3(sizeX, sizeY, sizeZ), new System.Numerics.Vector2(uvX, uvY), armorMask, mirror, scale);
         }
 
         private SkinPartOffset ReadOffset(EndiannessAwareBinaryReader reader)
@@ -101,6 +119,40 @@ namespace PckStudio.ModelSupport.Internal.Format
                     return "LEG0";
                 case PSMParentType.LEG1:
                     return "LEG1";
+                case PSMParentType.HEADWEAR:
+                    return "HEADWEAR";
+                case PSMParentType.JACKET:
+                    return "JACKET";
+                case PSMParentType.SLEEVE0:
+                    return "SLEEVE0";
+                case PSMParentType.SLEEVE1:
+                    return "SLEEVE1";
+                case PSMParentType.PANTS0:
+                    return "PANTS0";
+                case PSMParentType.PANTS1:
+                    return "PANTS1";
+                case PSMParentType.WAIST:
+                    return "WAIST";
+                case PSMParentType.LEGGING0:
+                    return "LEGGING0";
+                case PSMParentType.LEGGING1:
+                    return "LEGGING1";
+                case PSMParentType.SOCK0:
+                    return "SOCK0";
+                case PSMParentType.SOCK1:
+                    return "SOCK1";
+                case PSMParentType.BOOT0:
+                    return "BOOT0";
+                case PSMParentType.BOOT1:
+                    return "BOOT1";
+                case PSMParentType.ARMAMOR0:
+                    return "ARMARMOR0";
+                case PSMParentType.ARMAMOR1:
+                    return "ARMARMOR1";
+                case PSMParentType.BODYARMOR:
+                    return "BODYARMOR";
+                case PSMParentType.BELT:
+                    return "BELT";
                 default:
                     throw new InvalidDataException(type.ToString());
             }

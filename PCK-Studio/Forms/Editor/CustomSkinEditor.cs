@@ -185,7 +185,7 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private void buttonDone_Click(object sender, EventArgs e)
+        private void prepareSkinForExport()
         {
             EditorValue.Model.AdditionalBoxes.Clear();
             EditorValue.Model.AdditionalBoxes.AddRange(renderer3D1.ModelData);
@@ -194,6 +194,11 @@ namespace PckStudio.Forms.Editor
             // just in case they're not the same instance
             EditorValue.Anim = renderer3D1.ANIM;
             EditorValue.GameFlags = _gameFlags;
+        }
+
+        private void buttonDone_Click(object sender, EventArgs e)
+        {
+            prepareSkinForExport();
             DialogResult = DialogResult.OK;
             Save();
         }
@@ -205,7 +210,10 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.Filter = SkinModelImporter.Default.SupportedModelFileFormatsFilter;
             saveFileDialog.FileName = EditorValue.MetaData.Name.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                prepareSkinForExport();
                 SkinModelImporter.Default.Export(saveFileDialog.FileName, EditorValue.GetModelInfo());
+            }
         }
 
         private void importSkinButton_Click(object sender, EventArgs e)
@@ -434,6 +442,7 @@ namespace PckStudio.Forms.Editor
         {
             Image templateTexture = Resources.classic_template;
             SkinAnimMask templateAnimMask = SkinAnimMask.MODERN_WIDE_MODEL;
+            SkinGameFlagsMask templateSkinFlagsMask = SkinGameFlagsMask.HUMAN_SKIN;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Template Model";
@@ -441,7 +450,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.FileName = SanitizeModelFilename(EditorValue.MetaData.Name);
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, templateAnimMask, new SkinModel());
+                SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, templateAnimMask, templateSkinFlagsMask, new SkinModel());
                 SkinModelImporter.Default.Export(saveFileDialog.FileName, modelInfo);
             }
         }
@@ -462,6 +471,7 @@ namespace PckStudio.Forms.Editor
         {
             renderer3D1.ANIM = skinAdjustmentsEditorControl1.GetAnim();
             _gameFlags = skinAdjustmentsEditorControl1.GetGameFlags();
+            EditorValue.GameFlags = _gameFlags;
         }
 
         private void armorButtonControl_Click(object sender, EventArgs e)

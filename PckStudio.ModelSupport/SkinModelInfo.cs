@@ -12,12 +12,14 @@ namespace PckStudio.ModelSupport
     {
         public SkinModel Model { get; }
         public SkinANIM Anim { get; }
+        public SkinGameFlags SkinFlags { get; }
         public Image Texture { get; }
 
-        public SkinModelInfo(Image texture, SkinANIM anim, SkinModel model)
+        public SkinModelInfo(Image texture, SkinANIM anim, SkinGameFlags skinFlags, SkinModel model)
         {
             Texture = texture;
             Anim = anim;
+            SkinFlags = skinFlags;
             Model = model;
         }
     }

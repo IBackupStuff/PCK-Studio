@@ -6,6 +6,7 @@ using OMI;
 using System;
 using OpenTK;
 using PckStudio.Core.Skin;
+using System.Windows.Forms;
 
 namespace PckStudio.ModelSupport.Internal.Format
 {
@@ -33,6 +34,7 @@ namespace PckStudio.ModelSupport.Internal.Format
                 writer.WriteString(PSMFile.HEADER_MAGIC);
                 writer.Write(_PSM.Version);
                 writer.Write(_PSM.SkinANIM.ToValue());
+                writer.Write((byte)_PSM.SkinFlags.ToValue());
                 writer.Write(_PSM.Parts.Count);
                 foreach (SkinBOX part in _PSM.Parts)
                 {
@@ -49,7 +51,11 @@ namespace PckStudio.ModelSupport.Internal.Format
 
         private void WritePart(EndiannessAwareBinaryWriter writer, SkinBOX part)
         {
-            writer.Write((byte)GetParentPart(part.Type));
+            byte armorMask = (byte)((part.ArmorMaskFlags.ToValue() >> 1) & 0x07);
+            byte parentType = (byte)((int)GetParentPart(part.Type) & 0x1F);
+
+            byte armorMaskAndParentType = (byte)((armorMask << 5) | parentType);
+            writer.Write(armorMaskAndParentType);
             writer.Write(part.Pos.X);
             writer.Write(part.Pos.Y);
             writer.Write(part.Pos.Z);
@@ -60,9 +66,9 @@ namespace PckStudio.ModelSupport.Internal.Format
             byte uvX = (byte)MathHelper.Clamp((int)part.UV.X, 0, 64);
             byte uvY = (byte)MathHelper.Clamp((int)part.UV.Y, 0, 64);
             byte mirrorAndUvX = (byte)(Convert.ToByte(part.Mirror) << 7 | uvX);
-            byte hideWithArmorAndUvY = (byte)(Convert.ToByte(part.ArmorMaskFlags.ToValue()) << 7 | uvY);
+            byte helmetMaskAndUvY = (byte)(Convert.ToByte(part.ArmorMaskFlags.ToValue()) << 7 | uvY);
             writer.Write(mirrorAndUvX);
-            writer.Write(hideWithArmorAndUvY);
+            writer.Write(helmetMaskAndUvY);
             writer.Write(part.Scale);
         }
 
@@ -82,6 +88,40 @@ namespace PckStudio.ModelSupport.Internal.Format
                     return PSMParentType.LEG0;
                 case "LEG1":
                     return PSMParentType.LEG1;
+                case "HEADWEAR":
+                    return PSMParentType.HEADWEAR;
+                case "JACKET":
+                    return PSMParentType.JACKET;
+                case "SLEEVE0":
+                    return PSMParentType.SLEEVE0;
+                case "SLEEVE1":
+                    return PSMParentType.SLEEVE1;
+                case "PANTS0":
+                    return PSMParentType.PANTS0;
+                case "PANTS1":
+                    return PSMParentType.PANTS1;
+                case "WAIST":
+                    return PSMParentType.WAIST;
+                case "LEGGING0":
+                    return PSMParentType.LEGGING0;
+                case "LEGGING1":
+                    return PSMParentType.LEGGING1;
+                case "SOCK0":
+                    return PSMParentType.SOCK0;
+                case "SOCK1":
+                    return PSMParentType.SOCK1;
+                case "BOOT0":
+                    return PSMParentType.BOOT0;
+                case "BOOT1":
+                    return PSMParentType.BOOT1;
+                case "ARMARMOR0":
+                    return PSMParentType.ARMAMOR0;
+                case "ARMARMOR1":
+                    return PSMParentType.ARMAMOR1;
+                case "BODYARMOR":
+                    return PSMParentType.BODYARMOR;
+                case "BELT":
+                    return PSMParentType.BELT;
                 default:
                     throw new InvalidDataException(type);
             }
