@@ -163,7 +163,7 @@ namespace PckStudio.Controls
                 [PckAssetType.TextureFile] = HandleTextureFile,
                 [PckAssetType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
                 [PckAssetType.InfoFile] = null,
-                [PckAssetType.TexturePackInfoFile] = null,
+                [PckAssetType.TexturePackInfoFile] = HandleTexturePackInfoFile,
                 [PckAssetType.LocalisationFile] = HandleLocalisationFile,
                 [PckAssetType.GameRulesFile] = HandleGameRuleFile,
                 [PckAssetType.AudioFile] = HandleAudioFile,
@@ -473,6 +473,33 @@ namespace PckStudio.Controls
             }
         }
 
+        private void HandleTexturePackInfoFile(PckAsset asset)
+        {
+            try
+            {
+                OMI.ByteOrder endianness = BigEndianCheckBox.Checked ? OMI.ByteOrder.BigEndian : OMI.ByteOrder.LittleEndian;
+
+                ISaveContext<PckFile> saveContext = new DelegatedSaveContext<PckFile>(Settings.Default.AutoSaveChanges, (texturePackInfoFile) =>
+                {
+                    asset.SetData(new PckFileWriter(texturePackInfoFile, endianness));
+                });
+                PckFile texturePackInfoFile = asset.GetData(new PckFileReader(endianness));
+                using TexturePackInfoEditor texturePackInfoEditor = new TexturePackInfoEditor(texturePackInfoFile, saveContext);
+                _wasModified = texturePackInfoEditor.ShowDialog(this) == DialogResult.OK;
+            }
+            catch (OverflowException)
+            {
+                MessageBox.Show(this, $"Failed to open {asset.Filename}\n" +
+                    "Try converting the file by using the \"File Functions->Set PCK Endianness\" tool and try again.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open {asset.Filename}\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void HandleAudioFile(PckAsset asset)
         {
             try
@@ -490,7 +517,7 @@ namespace PckStudio.Controls
             catch (OverflowException)
             {
                 MessageBox.Show(this, $"Failed to open {asset.Filename}\n" +
-                    "Try converting the file by using the \"Misc. Functions/Set PCK Endianness\" tool and try again.",
+                    "Try converting the file by using the \"File Functions->Set PCK Endianness\" tool and try again.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)

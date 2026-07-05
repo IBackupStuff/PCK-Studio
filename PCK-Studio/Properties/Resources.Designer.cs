@@ -255,6 +255,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Comparison {
+            get {
+                object obj = ResourceManager.GetObject("Comparison", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap CUSTOM_SKIN_ICON {
             get {
                 object obj = ResourceManager.GetObject("CUSTOM SKIN ICON", resourceCulture);

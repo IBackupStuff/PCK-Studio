@@ -183,6 +183,12 @@
     <Compile Include="Forms\ContributorsForm.Designer.cs">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Editor\TexturePackInfoEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\TexturePackInfoEditor.Designer.cs">
+      <DependentUpon>TexturePackInfoEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Editor\ModelEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,6 +437,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ContributorsForm.resx">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\TexturePackInfoEditor.resx">
+      <DependentUpon>TexturePackInfoEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\ModelEditor.resx">
       <DependentUpon>ModelEditor.cs</DependentUpon>
