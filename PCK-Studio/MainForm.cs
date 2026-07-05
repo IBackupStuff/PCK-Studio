@@ -339,7 +339,7 @@ namespace PckStudio
             }
         }
 
-        private static PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
+        private static PckFile InitializePack(int packId, int packVersion, string packName)
 		{
 			var pack = new PckFile(3);
 
@@ -354,9 +354,9 @@ namespace PckStudio
 			return pack;
 		}
 
-		private static PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK)
+		private static PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res)
 		{
-            PckFile pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
+            PckFile pack = InitializePack(packId, packVersion, packName);
 
 			PckFile infoPCK = new PckFile(3);
 
@@ -379,7 +379,7 @@ namespace PckStudio
 
 		private static PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-            PckFile pack = InitializeTexturePack(packId, packVersion, packName, res, true);
+            PckFile pack = InitializeTexturePack(packId, packVersion, packName, res);
             PckAsset gameRuleAsset = pack.CreateNewAsset("GameRules.grf", PckAssetType.GameRulesFile);
             GameRuleFile grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
@@ -408,7 +408,7 @@ namespace PckStudio
             namePrompt.OKButtonText = "Ok";
             if (namePrompt.ShowDialog(this) == DialogResult.OK)
             {
-                PckFile skinPck = InitializePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, namePrompt.NewText, true);
+                PckFile skinPck = InitializePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, namePrompt.NewText);
                 PackInfo packInfo = PackInfo.Create(skinPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved skin pack", "Unsaved skin pack", packInfo);
             }
@@ -419,7 +419,7 @@ namespace PckStudio
             var packPrompt = new CreateTexturePackPrompt();
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
-                PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
+                PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes);
                 PackInfo packInfo = PackInfo.Create(texturePackPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved texture pack", "Unsaved texture pack", packInfo);
             }
