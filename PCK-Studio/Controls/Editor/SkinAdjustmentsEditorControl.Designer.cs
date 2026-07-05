@@ -804,10 +804,10 @@ namespace PckStudio.Controls
             this.humanCheckbox.AutoSize = true;
             this.humanCheckbox.Location = new System.Drawing.Point(14, 102);
             this.humanCheckbox.Name = "humanCheckbox";
-            this.humanCheckbox.Size = new System.Drawing.Size(119, 15);
+            this.humanCheckbox.Size = new System.Drawing.Size(74, 15);
             this.humanCheckbox.TabIndex = 60;
             this.humanCheckbox.Tag = PckStudio.Core.Skin.SkinGameFlagsFlag.HUMAN_SKIN;
-            this.humanCheckbox.Text = "Human/Character";
+            this.humanCheckbox.Text = "Character";
             this.humanCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.humanCheckbox.UseSelectable = true;
             this.humanCheckbox.CheckedChanged += new System.EventHandler(this.gamesFlagCheckbox_CheckedChanged);
@@ -868,9 +868,9 @@ namespace PckStudio.Controls
             this.skinTypeComboBox.Items.AddRange(new object[] {
             "None",
             "Creature/Fantasy",
-            "Human/Character",
-            "Female Human/Character",
-            "Male Human/Character",
+            "Character",
+            "Female Character",
+            "Male Character",
             "Robot/Synthetic",
             "Custom"});
             this.skinTypeComboBox.Location = new System.Drawing.Point(6, 125);
