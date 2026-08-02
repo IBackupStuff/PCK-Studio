@@ -365,7 +365,7 @@
     <value>..\Resources\shader\texturedCubeFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="CHANGELOG" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\CHANGELOG.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\CHANGELOG.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="binkawin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\binka\binkawin.asi;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -171,20 +171,15 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.0.0.0
-        ///====================  
+        ///   Looks up a localized string similar to 7.1.1
+        ///=====
         ///
-        ///-Added .3dst (3DS Texture) support  
-        ///-Semi-added Sub-Pck editing  
-        ///-Add an edit all properties tool item  
-        ///-Skin Preview has been improved  
-        ///-Added Pack Icon Injection into .arc file  
-        ///-Improved COL Editor  
-        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
-        ///-Some UI redesigned by yaboiFoxx  
-        ///-Improved the changelog!  
-        ///-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
-        ///-Added the abili [rest of string was truncated]&quot;;.
+        ///Bug Fixes:
+        ///-Fixed cancelled MessageBox erroneously stating &quot;Node not extracted&quot; while using the Export Skin Icon tool.
+        ///-Skin icons can no longer be exported for skins with abnormal resolutions.
+        ///-Skin paper dolls can no longer be created for skins with abnormal resolutions. A default skin icon will be returned instead.
+        ///-Fix crash for paper dolls generated from skin textures smaller than the base resolution skin size
+        ///-Fix crash for paper dolls generated from skins with boxes placed outsid [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {

@@ -8,7 +8,7 @@ using System.Security.Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Pck Studio")]
-[assembly: AssemblyDescription("A Minecraft Legacy Console .pck Editor")]
+[assembly: AssemblyDescription("A Minecraft Legacy Console Edition DLC Editor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PCK-Studio")]
 [assembly: AssemblyProduct("PCK-Studio")]
@@ -32,6 +32,6 @@ using System.Security.Permissions;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("7.1.0.0")]
-[assembly: AssemblyFileVersion("7.1.0.0")]
+[assembly: AssemblyVersion("7.1.1.0")]
+[assembly: AssemblyFileVersion("7.1.1.0")]
 [assembly: NeutralResourcesLanguage("")]

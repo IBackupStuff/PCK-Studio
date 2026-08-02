@@ -2072,7 +2072,7 @@
     <value>True</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>572, 11</value>
+    <value>509, 11</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 19</value>
@@ -3220,7 +3220,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>PckStudio.Controls.CustomTabControl, PCK-Studio, Version=7.0.1.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Controls.CustomTabControl, PCK-Studio, Version=7.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -5876,25 +5876,25 @@
     <value>setXMLVersion0MenuItem</value>
   </data>
   <data name="&gt;&gt;setXMLVersion0MenuItem.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.0.1.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;setXMLVersion1MenuItem.Name" xml:space="preserve">
     <value>setXMLVersion1MenuItem</value>
   </data>
   <data name="&gt;&gt;setXMLVersion1MenuItem.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.0.1.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;setXMLVersion2MenuItem.Name" xml:space="preserve">
     <value>setXMLVersion2MenuItem</value>
   </data>
   <data name="&gt;&gt;setXMLVersion2MenuItem.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.0.1.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;setXMLVersion3MenuItem.Name" xml:space="preserve">
     <value>setXMLVersion3MenuItem</value>
   </data>
   <data name="&gt;&gt;setXMLVersion3MenuItem.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.0.1.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem, PCK-Studio, Version=7.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;extractToolStripMenuItem.Name" xml:space="preserve">
     <value>extractToolStripMenuItem</value>
