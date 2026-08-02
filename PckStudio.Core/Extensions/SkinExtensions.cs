@@ -74,14 +74,43 @@ namespace PckStudio.Core.Extensions
         {
             //pixel scale set to 10 so inflated parts can be seen as properly as possible
 
+            Image skinTexture = skin.Texture;
+            if (skinTexture.Width != skinTexture.Height && skinTexture.Width / skinTexture.Height != 2)
+            {
+                return null;
+            }
+
             bool isWideSkin = skin.Anim.GetFlag(SkinAnimFlag.MODERN_WIDE_MODEL);
             bool isSlimSkin = skin.Anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
             bool isModernSkin = isWideSkin || isSlimSkin;
             bool isDinnerbone = skin.Anim.GetFlag(SkinAnimFlag.DINNERBONE);
             bool isStatueOfLiberty = skin.Anim.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY);
 
-            float textureScaleX = skin.Texture.Width / 64f; // minecraft skins always have a width of 64
-            float textureScaleY = skin.Texture.Height / (isModernSkin ? 64f : 32f);
+            int skinHeight = isModernSkin ? 64 : 32;
+
+            // fix for abnormal skin textures that are smaller than 64
+            if (skinTexture.Width != 64 || skinTexture.Height != skinHeight)
+            {
+                Bitmap resized = new Bitmap(64, skinHeight);
+
+                using (Graphics gfx = Graphics.FromImage(resized))
+                {
+                    gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    gfx.PixelOffsetMode = PixelOffsetMode.Half;
+                    gfx.SmoothingMode = SmoothingMode.None;
+                    gfx.CompositingMode = CompositingMode.SourceCopy;
+
+                    gfx.DrawImage(
+                        skinTexture,
+                        new Rectangle(0, 0, 64, skinHeight)
+                    );
+                }
+
+                skinTexture = resized;
+            }
+
+            float textureScaleX = skinTexture.Width / 64f; // minecraft skins always have a width of 64
+            float textureScaleY = skinTexture.Height / (isModernSkin ? 64f : 32f);
 
             // start with a large canvas and crop down later
             Image paperDoll = new Bitmap(512, 512);
@@ -220,6 +249,8 @@ namespace PckStudio.Core.Extensions
 
                     bool isStatueOfLibertyArm = isStatueOfLiberty && (box.Type == "ARM0" || box.Type == "SLEEVE0" || box.Type == "ARMARMOR0");
 
+                    box.UV = new (box.UV.X % 64, box.UV.Y % (isModernSkin ? 64f : 32f));
+
                     // this math is basically to ensure the face is stretched if the texture is improper
                     Rectangle faceRect = new Rectangle(
                         isStatueOfLibertyArm // get back of ARM 0 box if Statue of Liberty
@@ -229,6 +260,11 @@ namespace PckStudio.Core.Extensions
                         (int)(boxWidth * textureScaleX),
                         (int)(boxHeight * textureScaleY)
                     );
+
+                    if(faceRect.Size.Height == 0)
+                    {
+                        faceRect.Size = new Size(faceRect.X, 1);
+                    }
 
                     // get back of the face to display behind just incase transparent parts exist on the front layer
                     Rectangle backFaceRect = new Rectangle(
@@ -240,8 +276,13 @@ namespace PckStudio.Core.Extensions
                         (int)(boxHeight * textureScaleY)
                     );
 
-                    Image boxFace = skin.Texture.GetArea(faceRect);
-                    Image backBoxFace = skin.Texture.GetArea(backFaceRect);
+                    if (backFaceRect.Size.Height == 0)
+                    {
+                        backFaceRect.Size = new Size(backFaceRect.X, 1);
+                    }
+
+                    Image boxFace = skinTexture.GetArea(faceRect);
+                    Image backBoxFace = skinTexture.GetArea(backFaceRect);
 
                     if (box.Mirror)
                     {

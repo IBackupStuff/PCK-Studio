@@ -839,6 +839,12 @@ namespace PckStudio.Controls
 
                 Bitmap customIcon = new Bitmap(skinIconWidth, skinIconHeight);
 
+                // get the bust crop for the image
+                // this is handled externally to use the skin data to ensure skins are positioned in context of the default player head
+                Image croppedPaperDoll = skin.DrawPaperDoll(xmlVersion: EditorValue.File.xmlVersion, bustCrop: true);
+                if (croppedPaperDoll is null)
+                    return GetDefaultSkinNodeIconKey(skin.Anim);
+
                 using (Graphics gfx = Graphics.FromImage(customIcon))
                 {
                     gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -846,10 +852,6 @@ namespace PckStudio.Controls
                     gfx.SmoothingMode = SmoothingMode.None;
 
                     gfx.Fill(new Rectangle(0, 0, skinIconWidth, skinIconHeight), Color.FromArgb(0xFF, 0x5D, 0x9C, 0xEC));
-
-                    // get the bust crop for the image
-                    // this is handled externally to use the skin data to ensure skins are positioned in context of the default player head
-                    Image croppedPaperDoll = skin.DrawPaperDoll(xmlVersion: EditorValue.File.xmlVersion, bustCrop: true);
 
                     gfx.DrawImage(croppedPaperDoll, 0, 0); // the crop bust is already the same dimensions as the custom icon
 
@@ -2523,7 +2525,7 @@ namespace PckStudio.Controls
                     // Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
                     string.IsNullOrWhiteSpace(Path.GetDirectoryName(saveFileDialog.FileName)))
                 {
-                    MessageBox.Show(this, "The chosen directory is invalid. Please choose a different one and try again.", "Node not extracted");
+                    MessageBox.Show(this, "The chosen directory is invalid. Please choose a different one and try again.", "Icon not exported");
 
                     return;
                 }
@@ -2541,7 +2543,16 @@ namespace PckStudio.Controls
                     return;
                 }
 
-                skin.DrawPaperDoll(bustCrop: cropped).Save(saveFileDialog.FileName);
+                Image finalDoll = skin.DrawPaperDoll(bustCrop: cropped);
+
+                if (finalDoll is null)
+                {
+                    MessageBox.Show(this, "Cannot create an icon from an invalid Minecraft skin.", "Icon not exported");
+
+                    return;
+                }
+
+                finalDoll.Save(saveFileDialog.FileName);
             }
         }
 

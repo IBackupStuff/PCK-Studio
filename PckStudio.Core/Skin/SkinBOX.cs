@@ -89,7 +89,7 @@ namespace PckStudio.Core.Skin
         public string Type { get; }
         public Vector3 Pos { get; }
         public Vector3 Size { get; }
-        public Vector2 UV { get; }
+        public Vector2 UV { get; set; } // changing this to simulate texture wrapping for paper doll drawing. this might be a temporary change -May
         public SkinArmorFlags ArmorMaskFlags { get; }
         public bool Mirror { get; }
         public float Scale { get; }
