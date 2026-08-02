@@ -447,7 +447,7 @@ namespace PckStudio.Controls
             ItemSelectionPopUp dialog = new ItemSelectionPopUp(cZLIB, cDEFLATE, cXMEM);
             dialog.LabelText = "Type";
             dialog.ButtonText = "Ok";
-            if (dialog.ShowDialog() != DialogResult.OK)
+            if (dialog.ShowDialog(this) != DialogResult.OK)
                 return;
 
             GameRuleFile.CompressionType compressiontype = dialog.SelectedItem switch
@@ -466,7 +466,7 @@ namespace PckStudio.Controls
             });
 
             using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf, saveContext);
-            if (grfEditor.ShowDialog(this) == DialogResult.OK)
+            if (grfEditor.ShowDialog() == DialogResult.OK)
             {
                 _wasModified = true;
                 UpdateRichPresence();
