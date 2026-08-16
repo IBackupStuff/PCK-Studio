@@ -94,7 +94,7 @@ namespace PckStudio.ModelSupport
                 //texture = SwapBoxBottomTexture(texture, boxes);
             }
             
-            return CreateSkinModelInfo(texture, boxes, partOffsets);
+            return CreateSkinModelInfo(texture, boxes, Enumerable.Empty<SkinPartOffset>());
         }
 
         private static SkinModelInfo CreateSkinModelInfo(Image texture, IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets)
@@ -300,7 +300,7 @@ namespace PckStudio.ModelSupport
                 texture = Image.FromFile(texturePath).ReleaseFromFile();
             }
 
-            return CreateSkinModelInfo(texture, boxes, partOffsets);
+            return CreateSkinModelInfo(texture, boxes, Enumerable.Empty<SkinPartOffset>());
         }
 
         private static (IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets) LoadGeometry(Geometry geometry)
