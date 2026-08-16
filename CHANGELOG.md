@@ -1,3 +1,15 @@
+7.1.2
+=====
+
+Changes:
+-Importing bedrock skin models will no longer flip UVs automatically
+-Importing bedrock skin models will no longer set OFFSET parameters
+
+Bug Fixes:
+-Fixed a bug where the GRF Editor would hide the entire program when closed
+-Fixed a bug where "BODYARMOR" boxes would become "BODY" boxes when importing Bedrock skin models
+-Made a temporary fix for a bug where 5.0 BlockBench skin models would not import properly. Full support is planned.
+
 7.1.1
 =====
 

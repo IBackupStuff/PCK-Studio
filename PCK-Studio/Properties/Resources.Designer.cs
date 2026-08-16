@@ -171,15 +171,23 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.1.1
+        ///   Looks up a localized string similar to 7.1.2
+        ///=====
+        ///
+        ///Changes:
+        ///-Importing bedrock skin models will no longer flip UVs automatically
+        ///-Importing bedrock skin models will no longer set OFFSET parameters
+        ///
+        ///Bug Fixes:
+        ///-Fixed a bug where the GRF Editor would hide the entire program when closed
+        ///-Fixed a bug where &quot;BODYARMOR&quot; boxes would become &quot;BODY&quot; boxes when importing Bedrock skin models
+        ///-Made a temporary fix for a bug where 5.0 BlockBench skin models would not import properly. Full support is planned.
+        ///
+        ///7.1.1
         ///=====
         ///
         ///Bug Fixes:
-        ///-Fixed cancelled MessageBox erroneously stating &quot;Node not extracted&quot; while using the Export Skin Icon tool.
-        ///-Skin icons can no longer be exported for skins with abnormal resolutions.
-        ///-Skin paper dolls can no longer be created for skins with abnormal resolutions. A default skin icon will be returned instead.
-        ///-Fix crash for paper dolls generated from skin textures smaller than the base resolution skin size
-        ///-Fix crash for paper dolls generated from skins with boxes placed outsid [rest of string was truncated]&quot;;.
+        ///-Fixed ca [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
