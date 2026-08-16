@@ -464,7 +464,6 @@ namespace PckStudio.ModelSupport
                 "rightleg"    => "LEG0",
                 "leftleg"     => "LEG1",
                 "hat"         => "HEADWEAR",
-                "bodyarmor"   => "BODY",
                 "rightsleeve" => "SLEEVE0",
                 "leftsleeve"  => "SLEEVE1",
                 "rightpants"  => "PANTS0",
