@@ -340,7 +340,10 @@ namespace PckStudio.ModelSupport.Format.External
         
         [JsonProperty("elements")]
         internal Element[] Elements;
-        
+
+        [JsonProperty("groups")]
+        internal JArray Groups;
+
         [JsonProperty("outliner")]
         internal JArray Outliner;
         

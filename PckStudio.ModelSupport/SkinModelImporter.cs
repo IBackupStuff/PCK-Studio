@@ -30,7 +30,6 @@ using Newtonsoft.Json.Linq;
 using PckStudio.Core;
 using PckStudio.Core.Skin;
 using PckStudio.Core.Extensions;
-using PckStudio.Core.FileFormats;
 using PckStudio.ModelSupport.Format.External;
 using PckStudio.Core.Additional_Popups;
 using PckStudio.ModelSupport.Internal.Format;
@@ -86,7 +85,7 @@ namespace PckStudio.ModelSupport
                 .Select(outline => new SkinPartOffset(TryConvertToSkinBoxType(outline.Name), -GetOffsetFromOrigin(TryConvertToSkinBoxType(outline.Name), outline.Origin).Y))
                 .Where(offset => offset.Value != 0f);
 
-            IEnumerable<SkinBOX> boxes = ReadOutliner(null, blockBenchModel.Outliner, blockBenchModel.Elements);
+            IEnumerable<SkinBOX> boxes = ReadOutliner(null, blockBenchModel.Outliner, blockBenchModel.Groups, blockBenchModel.Elements);
 
             Image texture = null;
             if (blockBenchModel.Textures.IndexInRange(0))
@@ -146,7 +145,7 @@ namespace PckStudio.ModelSupport
             return new SkinModelInfo(texture, skinANIM, SkinGameFlagsMask.HUMAN_SKIN, skinModel);
         }
 
-        private static IEnumerable<SkinBOX> ReadOutliner(string parentName, JArray oulineChildren, IReadOnlyCollection<Element> elements)
+        private static IEnumerable<SkinBOX> ReadOutliner(string parentName, JArray oulineChildren, JArray groups, IReadOnlyCollection<Element> elements)
         {
             IEnumerable<SkinBOX> boxes = oulineChildren
                 .Where(token => token.Type == JTokenType.String && Guid.TryParse(token.ToString(), out Guid elementUuid) && elements.Any(e => e.Uuid == elementUuid))
@@ -160,7 +159,20 @@ namespace PckStudio.ModelSupport
 
             foreach (Outline childOutline in childOutlines)
             {
-                boxes = boxes.Concat(ReadOutliner(parentName ?? childOutline.Name, childOutline.Children, elements));
+                string partParentName = parentName;
+                if(partParentName is null && groups is not null)
+                {
+                    foreach (var item in groups)
+                    {
+                        if (new Guid(item["uuid"].ToString()) == childOutline.Uuid)
+                        {
+                            partParentName = item["name"].ToString();
+                            break;
+                        }
+                    }
+                }
+
+                boxes = boxes.Concat(ReadOutliner(partParentName ?? childOutline.Name, childOutline.Children, groups, elements));
             }
             return boxes;
         }
