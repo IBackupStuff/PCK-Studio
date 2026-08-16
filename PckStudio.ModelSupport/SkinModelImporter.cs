@@ -92,7 +92,7 @@ namespace PckStudio.ModelSupport
             if (blockBenchModel.Textures.IndexInRange(0))
             {
                 texture = blockBenchModel.Textures[0];
-                texture = SwapBoxBottomTexture(texture, boxes);
+                //texture = SwapBoxBottomTexture(texture, boxes);
             }
             
             return CreateSkinModelInfo(texture, boxes, partOffsets);
@@ -132,7 +132,7 @@ namespace PckStudio.ModelSupport
 
             skinModel.AdditionalBoxes.AddRange(customBoxes);
 
-            // check for know boxes and filter them out
+            // check for known boxes and filter them out
             SkinAnimMask mask = (SkinAnimMask)convertedBoxes
                 .Where(box => SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()) && Enum.IsDefined(typeof(SkinAnimMask), (1 >> (int)SkinBOX.KnownHashes[box.GetHashCode()])))
                 .Select(box => SkinBOX.KnownHashes[box.GetHashCode()])
@@ -182,7 +182,7 @@ namespace PckStudio.ModelSupport
 
         internal static void ExportBlockBenchModel(string filepath, SkinModelInfo modelInfo)
         {
-            Image exportTexture = SwapBoxBottomTexture(modelInfo);
+            Image exportTexture = modelInfo.Texture;
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, Path.GetFileNameWithoutExtension(filepath), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
@@ -286,7 +286,6 @@ namespace PckStudio.ModelSupport
             if (File.Exists(texturePath))
             {
                 texture = Image.FromFile(texturePath).ReleaseFromFile();
-                texture = SwapBoxBottomTexture(texture, boxes);
             }
 
             return CreateSkinModelInfo(texture, boxes, partOffsets);
@@ -400,7 +399,7 @@ namespace PckStudio.ModelSupport
                 string content = JsonConvert.SerializeObject(bedrockModel);
                 File.WriteAllText(filepath, content);
                 string texturePath = Path.Combine(Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath)) + ".png";
-                SwapBoxBottomTexture(modelInfo).Save(texturePath, ImageFormat.Png);
+                modelInfo.Texture.Save(texturePath, ImageFormat.Png);
             }
         }
 
