@@ -36,6 +36,7 @@ using PckStudio.Rendering.Shader;
 using System.Linq;
 using PckStudio.Core.Skin;
 using PckStudio.Core;
+using System.Threading;
 
 namespace PckStudio.Rendering
 {
@@ -110,7 +111,7 @@ namespace PckStudio.Rendering
                     CenterSelectedObject();
             }
         }
-
+        public bool FlipCustomBoxSouths { get; set; } = false;
         public bool CenterOnSelect { get; set; } = false;
         public bool ShowBoundingBox { get; set; }
         public SkinArmorFlags ShowArmorMask
@@ -352,10 +353,7 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            head ??= new CubeMeshCollection("Head", GameConstants.SkinHeadTranslation.ToOpenTKVector(), GameConstants.SkinHeadPivot.ToOpenTKVector())
-            {
-                FlipZMapping = true
-            };
+            head ??= new CubeMeshCollection("Head", GameConstants.SkinHeadTranslation.ToOpenTKVector(), GameConstants.SkinHeadPivot.ToOpenTKVector());
             head.AddNamed("DefaultHead", new(-4, -8, -4), new(8, 8, 8), new(0, 0));
             head.AddNamed("DefaultHeadOverlay", new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
             
@@ -783,7 +781,7 @@ namespace PckStudio.Rendering
             }
 
             CubeMeshCollection cubeMesh = meshStorage[skinBox.Type];
-            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f);
+            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f, FlipCustomBoxSouths);
         }
 
         private void OnANIMUpdate()
@@ -798,12 +796,18 @@ namespace PckStudio.Rendering
             leftLeg.SetVisible(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED));
 
             bool slim = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            bool modern = slim || ANIM.GetFlag(SkinAnimFlag.MODERN_WIDE_MODEL);
+
+            head.ReplaceCube(0, new(-4, -8, -4), new(8, 8, 8), new(0, 0), flipZMapping: modern);
+            head.ReplaceCube(1, new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2, flipZMapping: modern);
+
+            body.ReplaceCube(0, new(-4, 0, -2), new(8, 12, 4), new(16, 16), flipZMapping: modern);
+            body.ReplaceCube(1, new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale, flipZMapping: modern);
 
             tool0.ReplaceCube(0, new(slim ? -0.75f : -1.75f, -5.35f, -18.35f), new(0, 16, 16), new(0, -16));
             tool1.ReplaceCube(0, new(slim ? 0.75f : 1.75f, -5.35f, -18.35f), new(0, 16, 16), new(0, -16));
 
-            head.FlipZMapping = true;
-            if (slim || ANIM.GetFlag(SkinAnimFlag.MODERN_WIDE_MODEL))
+            if (modern)
             {
                 TextureSize = new Size(64, 64);
                 body.SetVisible(1, !ANIM.GetFlag(SkinAnimFlag.JACKET_DISABLED));
@@ -812,32 +816,35 @@ namespace PckStudio.Rendering
                 rightLeg.SetVisible(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_PANTS_DISABLED));
                 leftLeg.SetVisible(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_PANTS_DISABLED));
 
+                // because the south UVs are only flipped when it's a modern model, it will always be true here. -may
+
                 int slimValue = slim ? 3 : 4;
-                rightArm.ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 16));
-                rightArm.ReplaceCube(1, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32), inflate: OverlayScale);
+                rightArm.ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 16), flipZMapping: true);
+                rightArm.ReplaceCube(1, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32), inflate: OverlayScale, flipZMapping: true);
 
-                leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
-                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), inflate: OverlayScale);
+                leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48), flipZMapping: true);
+                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), inflate: OverlayScale, flipZMapping: true);
 
-                rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-                leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48));
+                rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), flipZMapping: true);
+                leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48), flipZMapping: true);
                 return;
             }
-            
-            TextureSize = new Size(64, 32);
-            
-            body.SetVisible(1, false);
-            head.FlipZMapping = false;
 
-            rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
+            // similarly to above, it will always be false here. -may
+
+            TextureSize = new Size(64, 32);
+
+            body.SetVisible(1, false);
+
+            rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16), flipZMapping: false);
             rightArm.SetVisible(1, false);
             
-            leftArm.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true);
+            leftArm.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true, flipZMapping: false);
             leftArm.SetVisible(1, false);
 
-            rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
+            rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), flipZMapping: false);
             rightLeg.SetVisible(1, false);
-            leftLeg.ReplaceCube (0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
+            leftLeg.ReplaceCube (0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true, flipZMapping: false);
             leftLeg.SetVisible(1, false);
         }
 

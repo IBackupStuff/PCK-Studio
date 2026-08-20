@@ -213,10 +213,9 @@ namespace PckStudio.Rendering
                 Vector3 pivot = translation * -1;
                 Vector3 rotation = (modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
                 CubeMeshCollection cubeCollection = new CubeMeshCollection(modelPart.Name, translation - parentTranslation, pivot - parentPivot, rotation - parentRotation);
-                cubeCollection.FlipZMapping = true;
                 foreach (ModelBox boxes in modelPart.GetBoxes())
                 {
-                    cubeCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
+                    cubeCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror, 0, true);
                 }
                 meshes.Add(cubeCollection);
                 BuildModelMesh(metaDataPart.Children, translation, rotation, pivot, model).ForEach(cubeCollection.Add);

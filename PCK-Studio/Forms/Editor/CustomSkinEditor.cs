@@ -55,6 +55,7 @@ namespace PckStudio.Forms.Editor
             _xmlVersion = xmlVersion;
             boxEditorControl1.SetBOXVersion(xmlVersion);
             _inflateOverlayParts = _xmlVersion > 0 && _xmlVersion < 3;
+            renderer3D1.FlipCustomBoxSouths = _xmlVersion > 0;
             skinAdjustmentsEditorControl1.SetSkin(skin);
             renderer3D1.ShowArmorMask = displayArmorFlags;
         }

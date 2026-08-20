@@ -30,9 +30,9 @@ namespace PckStudio.Rendering
 {
     public static class CubeMeshCollectionExtensions
     {
-        public static void AddSkinBox(this CubeMeshCollection cubeMeshes, SkinBOX skinBox, float inflate = 0f)
+        public static void AddSkinBox(this CubeMeshCollection cubeMeshes, SkinBOX skinBox, float inflate = 0f, bool flipZMapping = false)
         {
-            var cube = skinBox.ToCube(inflate, cubeMeshes.FlipZMapping);
+            var cube = skinBox.ToCube(inflate, flipZMapping);
             cubeMeshes.Add(new CubeMesh(skinBox.Type, cube));
         }
     }
@@ -41,12 +41,6 @@ namespace PckStudio.Rendering
     {
         private List<GenericMesh<TextureVertex>> cubes;
         private Dictionary<string, CubeMeshCollection> subCollection;
-
-        public bool FlipZMapping
-        {
-            get => _flipZMapping;
-            set => _flipZMapping = value;
-        }
 
         public Vector3 Translation { get; set; }
         public Vector3 Rotation { get; }
@@ -72,8 +66,6 @@ namespace PckStudio.Rendering
         public int Count => cubes.Count;
 
         public bool IsReadOnly => false;
-
-        private bool _flipZMapping = false;
 
         public CubeMeshCollection(string name, bool visible = true) : base(name, visible, PrimitiveType.Triangles, CubeMesh.VertexBufferLayout)
         {
@@ -117,15 +109,15 @@ namespace PckStudio.Rendering
             return cubes.Where(c => c.Visible).SelectMany(selector);
         }
 
-        public void Add(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, int armorFlags = 0)
+        public void Add(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, int armorFlags = 0, bool flipZMapping = false)
         {
-            var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping, armorFlags);
+            var cube = new Cube(position, size, uv, inflate, mirrorTexture, flipZMapping, armorFlags);
             Add(new CubeMesh(cube));
         }
 
-        public void AddNamed(string name, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, int armorFlags = 0)
+        public void AddNamed(string name, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, int armorFlags = 0, bool flipZMapping = false)
         {
-            var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping, armorFlags);
+            var cube = new Cube(position, size, uv, inflate, mirrorTexture, flipZMapping, armorFlags);
             Add(new CubeMesh(name, cube));
         }
 
@@ -167,14 +159,14 @@ namespace PckStudio.Rendering
             }
         }
 
-        public void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, int armorFlags = 0)
+        public void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, int armorFlags = 0, bool flipZMapping = false)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
 
             if (cubes[index] is CubeMesh cubeMesh)
-            cubes[index] = cubeMesh.SetCube(new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping, armorFlags));
+            cubes[index] = cubeMesh.SetCube(new Cube(position, size, uv, inflate, mirrorTexture, flipZMapping, armorFlags));
         }
 
         public Vector3 GetCenter(int index)
