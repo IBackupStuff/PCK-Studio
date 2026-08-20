@@ -215,7 +215,7 @@ namespace PckStudio.Rendering
                 CubeMeshCollection cubeCollection = new CubeMeshCollection(modelPart.Name, translation - parentTranslation, pivot - parentPivot, rotation - parentRotation);
                 foreach (ModelBox boxes in modelPart.GetBoxes())
                 {
-                    cubeCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror, 0, true);
+                    cubeCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror, 0);
                 }
                 meshes.Add(cubeCollection);
                 BuildModelMesh(metaDataPart.Children, translation, rotation, pivot, model).ForEach(cubeCollection.Add);

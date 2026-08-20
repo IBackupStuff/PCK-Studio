@@ -401,7 +401,7 @@ namespace PckStudio.Rendering
 
         private void InitializeArmorData()
         {
-            const float armorInflation = 0.75f;
+            const float armorInflation = 1.0f;
             const float armorLayer2Inflation = 0.5f;
 
             var helmet = new CubeMeshCollection("HELMET");
