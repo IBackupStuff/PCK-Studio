@@ -89,7 +89,7 @@ namespace PckStudio.Core.Extensions
             int skinHeight = isModernSkin ? 64 : 32;
 
             // fix for abnormal skin textures that are smaller than 64
-            if (skinTexture.Width != 64 || skinTexture.Height != skinHeight)
+            if (skinTexture.Width < 64 || skinTexture.Height < skinHeight)
             {
                 Bitmap resized = new Bitmap(64, skinHeight);
 
